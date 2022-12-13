@@ -6,7 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import SignIN from './Components/SignInPage.js';
 import Main from './Components/MainPage.js'
 import Test from './Components/test.js'
-import SignUp from './Components/StudentSignup.js'
+import SignUp from './Components/StudentSignUp.js'
+import SignUpAdmin from './Components/AdminSignUp.js'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 //images
 //import logo from './Picture1.png';
@@ -15,9 +17,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Main/>
+  //<Main/>
   //<SignIN/>
-  //<SignUp/>
+  <SignUpAdmin/>
   //<Test/>
 ); 
 
