@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 //images
-import logo from './Picture1.png';
+import logo from './Logo.png';
 import './Mainpage.css'
 
 const theme = createTheme();

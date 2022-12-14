@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SignIN from './Components/SignInPage.js';
-import Main from './Components/MainPage.js'
-import Test from './Components/test.js'
-import SignUp from './Components/StudentSignUp.js'
-import Calendar from './Components/StudentCalnedarPage.js'
-import SignUpAdmin from './Components/AdminSignUp.js'
+import SignIN from './Views/SignInPage.js';
+import Main from './Views/MainPage.js'
+import Test from './Views/test.js'
+import SignUp from './Views/StudentSignup.js'
+import Calendar from './Views/StudentCalendarPage.js'
+import SignUpAdmin from './Views/AdminSignUp.js'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 //images
@@ -19,10 +19,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //<Main/>
-  //<SignIN/>
+  <SignIN/>
   //<SignUpAdmin/>
   //<Test/>
-  <Calendar/>
+  //<Calendar/>
 ); 
 
 
