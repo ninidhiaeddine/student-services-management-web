@@ -14,18 +14,10 @@ import PoolIcon from '@mui/icons-material/Pool';
 import DryCleaningIcon from '@mui/icons-material/DryCleaning';
 import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
 
-const theme = createTheme();
-
-const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
-
 
 export default function MainPage() {
   return (
-    <ThemeProvider theme={darkTheme}>
+
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid 
@@ -37,7 +29,7 @@ export default function MainPage() {
             flexDirection: 'column',
             alignItems: 'center',
             alignContent: 'center',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
             textAlign: 'center',
           }}
         >   
@@ -45,7 +37,7 @@ export default function MainPage() {
                 item
                 xs={12}
                 class='ServiceTypeBtn'>
-                <LocalLaundryServiceIcon class='ServiceIcon'/>
+                <LocalLaundryServiceIcon class='ServiceIcon' />
                 <h3>Laundry</h3>
             </Grid>
             <Grid
@@ -87,6 +79,6 @@ export default function MainPage() {
             
         </Grid>
       </Grid>
-    </ThemeProvider>
+
   );
 }

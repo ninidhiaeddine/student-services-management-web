@@ -9,20 +9,35 @@ import Test from './Components/test.js'
 import SignUp from './Components/StudentSignUp.js'
 import Calendar from './Components/StudentCalnedarPage.js'
 import SignUpAdmin from './Components/AdminSignUp.js'
+import NavBar from './Components/MainNavBar'
+import SideNavBar from './Components/SideNav.js'
+import SetUpTime from './Components/SetUpTimeSlot.js'
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 //images
 //import logo from './Picture1.png';
-
+const theme = createTheme();
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ThemeProvider theme={darkTheme}>
+      <SetUpTime/>
+  </ThemeProvider>
   //<Main/>
   //<SignIN/>
   //<SignUpAdmin/>
   //<Test/>
-  <Calendar/>
+  //<Calendar/>
+
+  //
 ); 
 
 
