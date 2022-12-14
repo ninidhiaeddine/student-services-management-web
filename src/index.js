@@ -3,21 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SignIN from './Components/SignInPage.js';
-import Main from './Components/MainPage.js'
-import Test from './Components/test.js'
-import SignUp from './Components/StudentSignUp.js'
-import Calendar from './Components/StudentCalnedarPage.js'
-import SignUpAdmin from './Components/AdminSignUp.js'
-import NavBar from './Components/MainNavBar'
-import SideNavBar from './Components/SideNav.js'
-import SetUpTime from './Components/SetUpTimeSlot.js'
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SignIn from './Views/SignIn.js';
+import Home from './Views/Home.js'
+import Test from './Views/test.js'
+import StudentSignUp from './Views/StudentSignup.js'
+import StudentCalendar from './Views/StudentCalendar.js'
+import AdminSignUp from './Views/AdminSignUp.js'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-//images
-//import logo from './Picture1.png';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 const theme = createTheme();
 const darkTheme = createTheme({
   palette: {
@@ -25,19 +20,34 @@ const darkTheme = createTheme({
   },
 });
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home/>,
+  },
+  {
+    path: "/SignIn",
+    element: <SignIn/>,
+  },
+  {
+    path: "/StudentSignUp",
+    element: <StudentSignUp/>,
+  },
+  {
+    path: "/AdminSignUp",
+    element: <AdminSignUp/>,
+  },
+  {
+    path: "/StudentHome",
+    element: <StudentCalendar/>,
+  }
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ThemeProvider theme={darkTheme}>
-      <SetUpTime/>
-  </ThemeProvider>
-  //<Main/>
-  //<SignIN/>
-  //<SignUpAdmin/>
-  //<Test/>
-  //<Calendar/>
-
-  //
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 ); 
 
 
