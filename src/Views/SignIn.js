@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as AuthApiService from '../Services/AuthApiService.js';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -23,6 +24,7 @@ const darkTheme = createTheme({
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const isStudent = useLocation().state.isStudent;
 
   function handleSignIn(event) {
     event.preventDefault();
@@ -34,6 +36,12 @@ export default function SignIn() {
     var jsonBody = JSON.stringify(data);
 
     AuthApiService.signInStudent(jsonBody);
+  }
+
+  function Title(props) {
+    if (props.isStudent === true)
+        return "Student Sign In";
+    return "Admin Sign In";
   }
 
   return (
@@ -55,7 +63,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          <Title isStudent={isStudent}/>
         </Typography>
         <Box component="form" noValidate onSubmit={handleSignIn} sx={{ mt: 1 }}>
           <TextField
@@ -92,7 +100,7 @@ export default function SignIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In As Student
+            Sign In
           </Button>
           <Grid container>
             <Grid item>

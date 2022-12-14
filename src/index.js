@@ -3,26 +3,40 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SignIN from './Views/SignInPage.js';
-import Main from './Views/MainPage.js'
+import SignIn from './Views/SignIn.js';
+import Home from './Views/Home.js'
 import Test from './Views/test.js'
-import SignUp from './Views/StudentSignup.js'
-import Calendar from './Views/StudentCalendarPage.js'
-import SignUpAdmin from './Views/AdminSignUp.js'
+import StudentSignUp from './Views/StudentSignup.js'
+import StudentCalendar from './Views/StudentCalendar.js'
+import AdminSignUp from './Views/AdminSignUp.js'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-//images
-//import logo from './Picture1.png';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home/>,
+  },
+  {
+    path: "/SignIn",
+    element: <SignIn/>,
+  },
+  {
+    path: "/StudentSignUp",
+    element: <StudentSignUp/>,
+  },
+  {
+    path: "/AdminSignUp",
+    element: <AdminSignUp/>,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  //<Main/>
-  <SignIN/>
-  //<SignUpAdmin/>
-  //<Test/>
-  //<Calendar/>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 ); 
 
 
