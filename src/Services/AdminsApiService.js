@@ -1,7 +1,7 @@
-var endpoint = "/students";
+var endpoint = "/admins";
 
-function getStudentById(studentId) {
-    var url = process.env.REACT_APP_API_URL + endpoint + '/' + studentId;
+export function getAdminById(adminId) {
+    var url = process.env.REACT_APP_API_URL + endpoint + '/' + adminId;
     let response = fetch(url, {
         method: 'GET'
     } );
@@ -9,10 +9,11 @@ function getStudentById(studentId) {
     return response;
 }
 
-function getAllStudents() {
+export function getAllAdmins() {
     var url = process.env.REACT_APP_API_URL + endpoint;
     let response = fetch(url, {
-        method: 'GET'
+        method: 'GET',
+        
     } );
 
     return response;

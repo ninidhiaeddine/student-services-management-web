@@ -1,16 +1,16 @@
 let endpoint = "/auth";
 
-function signInStudent(signInDto) {
+export function signInStudent(signInJson) {
     let url = process.env.REACT_APP_API_URL + endpoint + "/students";
-    signIn(url, signInDto);
+    signIn(url, signInJson);
 }
 
-function signInAdmin(signInDto) {
+export function signInAdmin(signInJson) {
     let url = process.env.REACT_APP_API_URL + endpoint + "/admins";
-    signIn(url, signInDto, callback);
+    signIn(url, signInJson);
 }
 
-function getCurrentStudent() {
+export function getCurrentStudent() {
     let url = process.env.REACT_APP_API_URL + endpoint + "/students/me";
 
     let response = fetch(url, {
@@ -23,7 +23,7 @@ function getCurrentStudent() {
     return response;
 }
 
-function getCurrentAdmin() {
+export function getCurrentAdmin() {
     let url = process.env.REACT_APP_API_URL + endpoint + "/admins/me";
 
     let response = fetch(url, {
@@ -36,10 +36,14 @@ function getCurrentAdmin() {
     return response;
 }
 
-function signIn(url, signInDto) {
+export function signIn(url, signInJson) {
+    console.log("Body to be sent = " + signInJson);
     let response = fetch(url, {
         method: 'POST',
-        body: JSON.stringify(signInDto)
+        body: signInJson,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 
     return response;
