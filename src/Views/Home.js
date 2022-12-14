@@ -5,24 +5,25 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 //images
-import logo from './Picture1.png';
+import logo from './Logo.png';
 import './Mainpage.css'
+import { Link } from 'react-router-dom';
 
 const theme = createTheme();
 
 const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
+  palette: {
+    mode: 'dark',
+  },
+});
 
 
-export default function MainPage() {
+export default function Home() {
   return (
     <ThemeProvider theme={darkTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid 
+        <Grid
           item
           xs={false}
           sm={6}
@@ -38,16 +39,16 @@ export default function MainPage() {
           }}
         >
           <img src={logo} alt="Image of app logo" width="50%"></img>
-          <br/>
+          <br />
           <h1>Student Management App</h1>
-          <br/>
+          <br />
           <p>Get ready to make your life easier with a single click </p>
         </Grid>
-        
-        
-        
-        <Grid item xs={12} sm={6}  elevation={6} square
-        sx={{
+
+
+
+        <Grid item xs={12} sm={6} elevation={6} square
+          sx={{
             my: 8,
             mx: 4,
             display: 'flex',
@@ -57,25 +58,31 @@ export default function MainPage() {
             mx: 'auto'
           }}
         >
-            <Box sx={{ mt: 1 
-            }}>
+          <Box sx={{
+            mt: 1
+          }}>
+            <Link to="/SignIn" style={{ textDecoration: 'none' }} state={{ isStudent: true }}>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In As Student
+                Student
               </Button>
+            </Link>
+
+            <Link to="/SignIn" style={{ textDecoration: 'none' }} state={{ isStudent: false }}>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In As Admin
+                Admin
               </Button>
-            </Box>
+            </Link>
+          </Box>
         </Grid>
       </Grid>
     </ThemeProvider>
