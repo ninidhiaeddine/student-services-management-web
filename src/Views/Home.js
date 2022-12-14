@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //images
 import logo from './Logo.png';
 import './Mainpage.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -19,8 +19,6 @@ const darkTheme = createTheme({
 
 
 export default function MainPage() {
-  const navigate = useNavigate();
-
   return (
     <ThemeProvider theme={darkTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -63,7 +61,7 @@ export default function MainPage() {
           <Box sx={{
             mt: 1
           }}>
-            <Link to="/SignIn" underline="none" state={{ isStudent: true }}>
+            <Link to="/SignIn" style={{ textDecoration: 'none' }} state={{ isStudent: true }}>
               <Button
                 type="submit"
                 fullWidth
@@ -74,7 +72,7 @@ export default function MainPage() {
               </Button>
             </Link>
 
-            <Link to="/SignIn" underline="none" state={{ isStudent: false }}>
+            <Link to="/SignIn" style={{ textDecoration: 'none' }} state={{ isStudent: false }}>
               <Button
                 type="submit"
                 fullWidth
