@@ -7,6 +7,7 @@ import SignIN from './Components/SignInPage.js';
 import Main from './Components/MainPage.js'
 import Test from './Components/test.js'
 import SignUp from './Components/StudentSignUp.js'
+import Calendar from './Components/StudentCalnedarPage.js'
 import SignUpAdmin from './Components/AdminSignUp.js'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,8 +20,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //<Main/>
   //<SignIN/>
-  <SignUpAdmin/>
+  //<SignUpAdmin/>
   //<Test/>
+  <Calendar/>
 ); 
 
 

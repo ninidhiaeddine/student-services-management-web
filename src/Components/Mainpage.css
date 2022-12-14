@@ -5,3 +5,11 @@
 Select {
   width: 100%;
 }
+.ServiceTypeBtn{
+    border: solid 2px white;
+    width: 70%;
+    height: fit-content;
+}
+.ServiceIcon{
+    width: 30%;
+}
