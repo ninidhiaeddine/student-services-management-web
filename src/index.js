@@ -13,6 +13,13 @@ import AdminSignUp from './Views/AdminSignUp.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+const theme = createTheme();
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 const router = createBrowserRouter([
   {
     path: "/",
