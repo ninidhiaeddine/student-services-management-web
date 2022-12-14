@@ -32,7 +32,7 @@ const darkTheme = createTheme({
   });
 
 
-export default function SignUp() {
+export default function StudentSignUp() {
     //password
     const [values, setValues] = React.useState({
         showPassword: false,
