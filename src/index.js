@@ -30,6 +30,10 @@ const router = createBrowserRouter([
     path: "/AdminSignUp",
     element: <AdminSignUp/>,
   },
+  {
+    path: "/StudentHome",
+    element: <StudentCalendar/>,
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
