@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,7 +10,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as AuthApiService from '../Services/AuthApiService.js';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import * as LocalStorageManager from '../Utils/LocalStorageManager.js'
 
 const theme = createTheme();
 
@@ -25,6 +25,7 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const isStudent = useLocation().state.isStudent;
+  const navigate = useNavigate();
 
   function handleSignIn(event) {
     event.preventDefault();
@@ -35,13 +36,72 @@ export default function SignIn() {
     };
     var jsonBody = JSON.stringify(data);
 
-    AuthApiService.signInStudent(jsonBody);
+    if (isStudent) {
+      AuthApiService.signInStudent(jsonBody)
+        .then(response => {
+          if (response.status == 200)
+            return response.text()
+          else
+            return Promise.reject();
+        })
+        .then(token => {
+          if (token)
+
+            LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
+
+          // get authenticated student info:
+          let student = AuthApiService.getCurrentStudent(token);
+
+          // store authenticated student info:
+          LocalStorageManager.storeAuthenticatedStudentInLocalStorage(student, password);
+
+          // navigate to student home:
+          navigate("/StudentHome");
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    } else {
+      AuthApiService.signInAdmin(jsonBody)
+        .then(response => response.text())
+        .then(token => {
+          if (token.status != 200)
+            return;
+
+          // store authorization token:
+          LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
+
+          // get authenticated admin info:
+          let admin = AuthApiService.getCurrentAdmin(token);
+
+          // store authenticated student info:
+          LocalStorageManager.storeAuthenticatedAdminInLocalStorage(admin, password);
+
+          // navigate to student home:
+          navigate("/AdminHome");
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   }
 
   function Title(props) {
     if (props.isStudent === true)
-        return "Student Sign In";
-    return "Admin Sign In";
+      return "Student Sign In";
+    else if (props.isStudent == false)
+      return "Admin Sign In";
+  }
+
+  function StudentAdminSignUpLink(props) {
+    if (props.isStudent === true)
+      return <Link to='/StudentSignUp' style={{ textDecoration: 'none' }} variant="body2">
+        {"Don't have an account? Sign Up"}
+      </Link>
+    else if (props.isStudent === false)
+      return <Link to='/AdminSignUp' style={{ textDecoration: 'none' }} variant="body2">
+        {"Don't have an account? Sign Up"}
+      </Link>
   }
 
   return (
@@ -63,7 +123,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          <Title isStudent={isStudent}/>
+          <Title isStudent={isStudent} />
         </Typography>
         <Box component="form" noValidate onSubmit={handleSignIn} sx={{ mt: 1 }}>
           <TextField
@@ -104,9 +164,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <StudentAdminSignUpLink isStudent={isStudent} />
             </Grid>
           </Grid>
         </Box>

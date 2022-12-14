@@ -1,12 +1,12 @@
 let endpoint = "/timeslots";
 
-export function addTimeSlots(timeSlotJsonList) {
+export function addTimeSlots(timeSlotJsonList, token) {
     let url = process.env.REACT_APP_API_URL + endpoint;
     let response = fetch(url, {
         method: 'POST',
         body: JSON.stringify(timeSlotJsonList),
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY"),
+            "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
         }
     });
@@ -14,13 +14,13 @@ export function addTimeSlots(timeSlotJsonList) {
     return response;
 }
 
-export function getTimeSlotById(timeSlotId) {
+export function getTimeSlotById(timeSlotId, token) {
     let url = process.env.REACT_APP_API_URL + endpoint + timeSlotId;
 
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY"),
+            "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
         }
     });
@@ -28,13 +28,13 @@ export function getTimeSlotById(timeSlotId) {
     return response;
 }
 
-export function getTimeSlotsByServiceType(serviceType) {
+export function getTimeSlotsByServiceType(serviceType, token) {
     let url = process.env.REACT_APP_API_URL + endpoint + "?serviceType=" + serviceType;
 
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
+            "Authorization": "Bearer " + token
         }
     });
 
@@ -60,7 +60,7 @@ export function getTimeSlots(
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
+            "Authorization": "Bearer " + token
         }
     });
 
@@ -69,14 +69,15 @@ export function getTimeSlots(
 
 export function updateTimeSlot(
     timeSlotJson,
-    timeSlotId) {
+    timeSlotId,
+    token) {
     let url = process.env.REACT_APP_API_URL + endpoint + "/" + timeSlotId;
 
     let response = fetch(url, {
         method: 'PUT',
         body: JSON.stringify(timeSlotJson),
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
+            "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
         }
     });
