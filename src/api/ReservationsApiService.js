@@ -8,7 +8,7 @@ function addReservation(reservationDto) {
         method: 'POST',
         body: JSON.stringify(reservationDto),
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 
@@ -21,7 +21,7 @@ function getReservationById(reservationId) {
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     } );
 
@@ -34,7 +34,7 @@ function getReservationsByStudent(studentId) {
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     } );
 
@@ -47,7 +47,7 @@ function getReservationsByTimeSlot(timeSlotId) {
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     } );
 

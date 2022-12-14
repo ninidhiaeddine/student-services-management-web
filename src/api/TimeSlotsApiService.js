@@ -6,7 +6,7 @@ function addTimeSlots(timeSlotDtoList) {
         method: 'POST',
         body: JSON.stringify(timeSlotDtoList),
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 
@@ -19,20 +19,20 @@ function getTimeSlotById(timeSlotId) {
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 
     return response;
 }
 
-function getTimeSlots(serviceType) {
+function getTimeSlotsByServiceType(serviceType) {
     let url = process.env.REACT_APP_API_URL + endpoint + "?serviceType=" + serviceType;
 
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 
@@ -47,7 +47,7 @@ function getTimeSlots(
     startDate = startDateInclusive.toDateString();
     endDate = endDateExclusive.toDateString();
 
-    let url = process.env.REACT_APP_API_URL + endpoint 
+    let url = process.env.REACT_APP_API_URL + endpoint
         + "?serviceType="
         + serviceType
         + "&startDateInclusive="
@@ -55,14 +55,14 @@ function getTimeSlots(
         + "&endDateExclusive="
         + endDate;
 
-        let response = fetch(url, {
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer " + getAuthorizationToken()
-            }
-        });
-    
-        return response;
+    let response = fetch(url, {
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
+        }
+    });
+
+    return response;
 }
 
 function updateTimeSlot(
@@ -74,7 +74,7 @@ function updateTimeSlot(
         method: 'PUT',
         body: JSON.stringify(timeSlotDto),
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 

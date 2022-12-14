@@ -16,7 +16,7 @@ function getCurrentStudent() {
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 
@@ -29,7 +29,7 @@ function getCurrentAdmin() {
     let response = fetch(url, {
         method: 'GET',
         headers: {
-            "Authorization": "Bearer " + getAuthorizationToken()
+            "Authorization": "Bearer " + localStorage.getItem("AUTH_TOKEN_KEY")
         }
     });
 
