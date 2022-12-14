@@ -23,7 +23,7 @@ const darkTheme = createTheme({
   });
 
 
-export default function MainPage() {
+export default function StudentCalendar() {
   return (
     <ThemeProvider theme={darkTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
