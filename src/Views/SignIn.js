@@ -6,26 +6,52 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as AuthApiService from '../Services/AuthApiService.js';
 import { useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import * as LocalStorageManager from '../Utils/LocalStorageManager.js'
+import * as LocalStorageManager from '../Utils/LocalStorageManager.js';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { OutlinedInput } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 const theme = createTheme();
 
 const darkTheme = createTheme({
   palette: {
+    primary: {
+      main: '#26D1B3'
+    },
     mode: 'dark',
   },
 });
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
+  const [email, _setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
   const isStudent = useLocation().state.isStudent;
   const navigate = useNavigate();
+
+  const setEmail = (email) => {
+    let emailWithSuffix = '';
+    if (isStudent)
+      emailWithSuffix = email + "@mail.aub.edu";
+    else
+      emailWithSuffix = email + "@aub.edu.lb";
+
+    _setEmail(emailWithSuffix);
+  }
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   function handleSignIn(event) {
     event.preventDefault();
@@ -88,9 +114,9 @@ export default function SignIn() {
 
   function Title(props) {
     if (props.isStudent === true)
-      return "Student Sign In";
+      return <h2 className='sub-header'>Student Sign In</h2>;
     else if (props.isStudent == false)
-      return "Admin Sign In";
+      return <h2 className='sub-header'>Admin Sign In</h2>;
   }
 
   function StudentAdminSignUpLink(props) {
@@ -122,9 +148,7 @@ export default function SignIn() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          <Title isStudent={isStudent} />
-        </Typography>
+        <Title isStudent={isStudent} />
         <Box component="form" noValidate onSubmit={handleSignIn} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -135,25 +159,50 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            InputProps={ isStudent ? {
+              endAdornment: (
+                <InputAdornment position="end">
+                  @mail.aub.edu
+                </InputAdornment>
+              ),
+            } : {
+              endAdornment: (
+                <InputAdornment position="end">
+                  @aub.edu.lb
+                </InputAdornment>
+              ),
+            }}
             onChange={e => {
               let value = e.target.value;
               setEmail(value);
             }}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={e => {
-              let value = e.target.value;
-              setPassword(value);
-            }}
-          />
+          <FormControl sx={{ width: '100%' }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <OutlinedInput
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              required
+              name="password"
+              label="Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              onChange={e => {
+                let value = e.target.value;
+                setPassword(value);
+              }}
+            />
+          </FormControl>
           <Button
             type="submit"
             fullWidth
