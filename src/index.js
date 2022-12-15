@@ -13,13 +13,6 @@ import { createTheme } from '@mui/system';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-const theme = createTheme();
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
-
 const router = createBrowserRouter([
   {
     path: "/",

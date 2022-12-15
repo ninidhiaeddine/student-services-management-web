@@ -22,32 +22,35 @@ import './Mainpage.css'
 const theme = createTheme();
 
 const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
+  palette: {
+    primary: {
+      main: '#26D1B3'
     },
-  });
+    mode: 'dark',
+  },
+});
 
 export default function AdminSignUp() {
-    //password
-    const [values, setValues] = React.useState({
-        showPassword: false,
-      });
-    
-    const handleChangePassword = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
-    
-      const handleClickShowPassword = () => {
-        setValues({
-          ...values,
-          showPassword: !values.showPassword,
-        });
-      };
-    
-      const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
-    
+  //password
+  const [values, setValues] = React.useState({
+    showPassword: false,
+  });
+
+  const handleChangePassword = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
 
 
   return (
@@ -65,12 +68,10 @@ export default function AdminSignUp() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate 
-          //onSubmit={handleSubmit} 
-          sx={{ mt: 3 }}>
+            <h2 className='sub-header'>Admin Sign up</h2>
+          <Box component="form" noValidate
+            //onSubmit={handleSubmit} 
+            sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -101,43 +102,61 @@ export default function AdminSignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        @aub.edu.lb
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
-              <FormControl sx={{ width: '100%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChangePassword('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+                <FormControl sx={{ width: '100%' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    id="password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChangePassword('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirm Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-                </Grid>
+                <FormControl sx={{ width: '100%' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                  <OutlinedInput
+                    label="Confirm Password"
+                    id="password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -147,13 +166,6 @@ export default function AdminSignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

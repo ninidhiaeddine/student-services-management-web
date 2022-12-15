@@ -21,52 +21,57 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
 
 import './Mainpage.css'
 const theme = createTheme();
 
 const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
+  palette: {
+    primary: {
+      main: '#26D1B3'
     },
-  });
+    mode: 'dark',
+  },
+});
 
 export default function StudentSignUp() {
-    //password
-    const [values, setValues] = React.useState({
-        showPassword: false,
-      });
-    
-    const handleChangePassword = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
-    
-      const handleClickShowPassword = () => {
-        setValues({
-          ...values,
-          showPassword: !values.showPassword,
-        });
-      };
-    
-      const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
-    
-      //Dropdown 
-      const [Gender, setGender] = React.useState('');
-      const [open, setOpen] = React.useState(false);
+  //password
+  const [values, setValues] = React.useState({
+    showPassword: false,
+  });
 
-        const handleChangeGender = (event) => {
-            setGender(event.target.value);
-        };
-        const handleClose = () => {
-            setOpen(false);
-          };
-        
-          const handleOpen = () => {
-            setOpen(true);
-          };
-        
+  const handleChangePassword = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  //Dropdown 
+  const [Gender, setGender] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+
+  const handleChangeGender = (event) => {
+    setGender(event.target.value);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
 
 
   return (
@@ -84,12 +89,10 @@ export default function StudentSignUp() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate 
-          //onSubmit={handleSubmit} 
-          sx={{ mt: 3 }}>
+          <h2 className='sub-header'>Student Sign up</h2>
+          <Box component="form" noValidate
+            //onSubmit={handleSubmit} 
+            sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -120,6 +123,13 @@ export default function StudentSignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        @mail.aub.edu
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -133,9 +143,9 @@ export default function StudentSignUp() {
                 />
               </Grid>
               <Grid item xs={12} sm={6} >
-                <FormControl sx={{ minWidth: '100%'}}>
-                <InputLabel id="GenderDropDownLabel">Gender</InputLabel>
-                 <Select
+                <FormControl sx={{ minWidth: '100%' }}>
+                  <InputLabel id="GenderDropDownLabel">Gender</InputLabel>
+                  <Select
                     labelId="GenderDropDownLabel"
                     id="GenderDropDown"
                     open={open}
@@ -144,57 +154,68 @@ export default function StudentSignUp() {
                     value={Gender}
                     label="Gender"
                     onChange={handleChangeGender}
-                    >
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <MenuItem value={1}>Male</MenuItem>
-                <MenuItem value={2}>Female</MenuItem>
-                <MenuItem value={3}>Other</MenuItem>
-                </Select>   
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={1}>Male</MenuItem>
+                    <MenuItem value={2}>Female</MenuItem>
+                  </Select>
                 </FormControl>
               </Grid>
 
               <Grid item xs={12}>
-              <FormControl sx={{ width: '100%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChangePassword('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+                <FormControl sx={{ width: '100%' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    id="password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChangePassword('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirm Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-                </Grid>
+                <FormControl sx={{ width: '100%' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                  <OutlinedInput
+                    type={values.showPassword ? 'text' : 'password'}
+                    name="password"
+                    label="Confirm Password"
+                    id="password"
+                    autoComplete="new-password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="DormStudent" color="primary" />}
-                  label="Dorm Student?"
-                />
+                <FormGroup>
+                  <FormControlLabel control={<Switch defaultChecked />} label="I am a dorms student" />
+                </FormGroup>
               </Grid>
             </Grid>
             <Button
@@ -205,13 +226,6 @@ export default function StudentSignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
