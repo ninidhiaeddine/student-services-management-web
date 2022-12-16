@@ -12,7 +12,7 @@ export default function ServicesTabs(props) {
 
     const setServiceType = (serviceType) => {
         _setServiceType(serviceType);
-        
+
         // callback:
         props.callback(serviceType);
     }
@@ -25,22 +25,32 @@ export default function ServicesTabs(props) {
                 aria-label="icon position tabs example"
                 orientation="vertical"
             >
-                <Tab icon={<LocalLaundryServiceIcon />} iconPosition="start" label="Laundry" />
-                <Tab icon={<DryCleaningIcon />} iconPosition="start" label="Room Cleaning" />
+                <Tab icon={<LocalLaundryServiceIcon />} iconPosition="start" label="Laundry" sx={{
+                    marginRight: 'auto',
+                }}
+                />
+                <Tab icon={<DryCleaningIcon />} iconPosition="start" label="Room Cleaning" sx={{
+                    marginRight: 'auto'
+                }}/>
+                <Tab icon={<FitnessCenterIcon />} iconPosition="start" label="Gym" sx={{
+                    marginRight: 'auto'
+                }}/>
+                <Tab icon={<PoolIcon />} iconPosition="start" label="Pool" sx={{
+                    marginRight: 'auto',
+                }}/>
+            </Tabs>
+
+        );
+    else
+        return (
+            <Tabs
+                value={serviceType}
+                onChange={(e, newValue) => setServiceType(newValue)}
+                aria-label="icon position tabs example"
+                orientation="vertical"
+            >
                 <Tab icon={<FitnessCenterIcon />} iconPosition="start" label="Gym" />
                 <Tab icon={<PoolIcon />} iconPosition="start" label="Pool" />
             </Tabs>
         );
-    else
-    return (
-        <Tabs
-            value={serviceType}
-            onChange={(e, newValue) => setServiceType(newValue)}
-            aria-label="icon position tabs example"
-            orientation="vertical"
-        >
-            <Tab icon={<FitnessCenterIcon />} iconPosition="start" label="Gym" />
-            <Tab icon={<PoolIcon />} iconPosition="start" label="Pool" />
-        </Tabs>
-    );
 }
