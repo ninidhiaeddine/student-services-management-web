@@ -6,7 +6,7 @@ export function addReservation(reservationJson, token) {
 
     let response = fetch(url, {
         method: 'POST',
-        body: JSON.stringify(reservationJson),
+        body: reservationJson,
         headers: {
             "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
