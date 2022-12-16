@@ -8,6 +8,8 @@ import Home from './Views/Home.js'
 import StudentSignUp from './Views/StudentSignup.js'
 import StudentCalendar from './Views/StudentCalendar.js'
 import AdminSignUp from './Views/AdminSignUp.js'
+import SetUpTimeSlots from './Views/SetUpTimeSlot.js'
+import Test from './Views/AdminHomePage.js'
 import { createTheme } from '@mui/system';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,6 +36,15 @@ const router = createBrowserRouter([
     path: "/StudentHome",
     element: <StudentCalendar/>,
   }
+  ,
+  {
+    path: "/SetUpTimeSlots",
+    element: <SetUpTimeSlots/>,
+  },
+  {
+    path: "/Test",
+    element: <Test/>,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

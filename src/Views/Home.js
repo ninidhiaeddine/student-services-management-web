@@ -9,6 +9,7 @@ import './Mainpage.css'
 import { Link } from 'react-router-dom';
 import SchoolIcon from '@mui/icons-material/School';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import Divider from '@mui/material/Divider';
 
 const darkTheme = createTheme({
   palette: {
@@ -27,7 +28,8 @@ export default function Home() {
         <Grid
           item
           xs={false}
-          sm={6}
+          sm={12}
+          md={6}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -36,7 +38,6 @@ export default function Home() {
             justifyContent: 'center',
             mx: 'auto',
             textAlign: 'center',
-            borderRight: 1
           }}
         >
           <img src={logo} alt="Image of app logo" width="50%"></img>
@@ -45,8 +46,8 @@ export default function Home() {
           <br />
           <p>Get ready to make your life easier with a single click </p>
         </Grid>
-
-        <Grid item xs={12} sm={6} elevation={6} square
+        <Divider orientation="vertical" flexItem variant="middle" />
+        <Grid item xs={12} sm={12} md={5} elevation={6} square
           sx={{
             my: 8,
             mx: 4,
