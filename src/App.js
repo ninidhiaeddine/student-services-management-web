@@ -1,6 +1,6 @@
 import SignIn from './Views/SignIn.js';
 import Home from './Views/Home.js'
-import StudentSignUp from './Views/StudentSignup.js'
+import StudentSignUp from './Views/StudentSignUp.js'
 import StudentHome from './Views/StudentHome.js'
 import AdminSignUp from './Views/AdminSignUp.js';
 import Welcome from './Views/Welcome.jsx';
