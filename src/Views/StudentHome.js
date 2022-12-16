@@ -9,13 +9,9 @@ import TimeSlot from '../Components/StudentTimeSlot';
 import Grid from '@mui/material/Grid';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-
-//icons
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import PoolIcon from '@mui/icons-material/Pool';
-import DryCleaningIcon from '@mui/icons-material/DryCleaning';
-import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
-
+import Stack from '@mui/material/Stack';
+import ServicesTabs from '../Components/ServicesTabs';
+import * as LocalStorageManager from '../Utils/LocalStorageManager.js';
 
 const darkTheme = createTheme({
   palette: {
@@ -29,30 +25,42 @@ const darkTheme = createTheme({
 
 export default function StudentHome() {
   const [value, setValue] = useState([null, null]);
+  const [authenticatedStudent, setAuthenticatedStudent] = useState(LocalStorageManager.getAuthenticatedStudent());
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <LocalizationProvider sx={{minWidth: 200}} dateAdapter={AdapterDayjs}>
-        <StaticDatePicker
-          displayStaticWrapperAs="desktop"
-          openTo="day"
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-            console.log(newValue.$D);
-            console.log(newValue.$M + 1);
-            console.log(newValue.$y);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
+      <Grid container>
+        <Grid item xs={2}>
+          <ServicesTabs isDorms={authenticatedStudent.isDorms}/>
+        </Grid>
 
-      <Container>
-      <Grid container columnSpacing={30} rowSpacing={2}>
+        <Grid item xs={10}>
+          <Container sx={{paddingTop: 5}}>
+            <Stack direction="row">
+              <LocalizationProvider sx={{ minWidth: 200 }} dateAdapter={AdapterDayjs}>
+                <StaticDatePicker
+                  displayStaticWrapperAs="desktop"
+                  openTo="day"
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                    console.log(newValue.$D);
+                    console.log(newValue.$M + 1);
+                    console.log(newValue.$y);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+              <Container>
+                <h2 className='text-center'>Time Slots</h2>
+                <Grid container columnSpacing={30} rowSpacing={2}>
+                </Grid>
+              </Container>
+            </Stack>
+          </Container>
+        </Grid>
       </Grid>
-      </Container>
-      
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
