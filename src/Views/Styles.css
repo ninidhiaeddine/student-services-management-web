@@ -47,6 +47,6 @@ Select {
 }
 .AdminBtn{
     border: solid #26D1B3 3px ;
-    border-radius: 20%;
-    
+    border-radius: 20px;
+    width: 400px;
 }

@@ -4,14 +4,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import logo from './Logo.png';
-import './Mainpage.css'
-import { Link } from 'react-router-dom';
+import logo from './Images/Logo.png';
+import './Styles.css'
+import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Navbar from '../Components/SideNav.js'
 import IconButton from '@mui/material/IconButton';
-import './Mainpage.css'
+import './Styles.css'
 
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
@@ -26,7 +26,9 @@ const darkTheme = createTheme({
   },
 });
 
-export default function Home() {
+export default function AdminHome() {
+  let navigate = useNavigate();
+
   return (
     <ThemeProvider theme={darkTheme}>
         <Navbar/>
@@ -53,15 +55,15 @@ export default function Home() {
             spacing={3}
             >   
                 <div class="AdminBtn">
-                <IconButton  item >
+                <IconButton  variant="outlined" onClick={() => navigate('/AdminManageReservations')}>
                     <EventRepeatIcon color="primary" sx={{ fontSize: 100 }}/>
-                    <h3>Manage Reservations</h3>
+                    <h5>Manage Reservations</h5>
                 </IconButton >
                 </div>
                 <div class="AdminBtn">
-                <IconButton  variant="outlined">
+                <IconButton  variant="outlined" onClick={() => navigate('/AdminSetUpTimeSlots')}>
                     <MoreTimeIcon color="primary" sx={{ fontSize: 100 }}/>
-                    <h3>Set Up Tiem Slots</h3>
+                    <h5>Set Up Time Slots</h5>
                 </IconButton >
                 </div>
 

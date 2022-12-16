@@ -3,11 +3,14 @@ import Home from './Views/Home.js'
 import StudentSignUp from './Views/StudentSignUp.js'
 import StudentHome from './Views/StudentHome.js'
 import AdminSignUp from './Views/AdminSignUp.js';
+import AdminSetUpTimeSlots from './Views/AdminSetUpTimeSlots.js';
+import AdminHome from './Views/AdminHome.js';
 import Welcome from './Views/Welcome.jsx';
 import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 
 function App() {
   const router = createBrowserRouter([
@@ -30,6 +33,14 @@ function App() {
     {
       path: "/AdminSignUp",
       element: <AdminSignUp />,
+    },
+    {
+      path: "/AdminHome",
+      element: <AdminHome />,
+    },
+    {
+      path: "/AdminSetUpTimeSlots",
+      element: <AdminSetUpTimeSlots />,
     },
     {
       path: "/StudentHome",
