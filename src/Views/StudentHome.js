@@ -29,6 +29,7 @@ export default function StudentHome() {
   const [selectedDate, setSelectedDate] = useState('');
   const [authenticatedStudent, setAuthenticatedStudent] = useState(LocalStorageManager.getAuthenticatedStudent());
   const [selectedServiceType, setSelectedServiceType] = useState(0);
+  const [timeSlotsData, setTimeSlotsData] = useState([]);
 
   const getSelectedServiceType = (serviceType) => {
     setSelectedServiceType(serviceType);
@@ -39,11 +40,11 @@ export default function StudentHome() {
       <CssBaseline />
       <Grid container>
         <Grid item xs={2}>
-          <ServicesTabs isDorms={authenticatedStudent.isDorms} callback={getSelectedServiceType}/>
+          <ServicesTabs isDorms={authenticatedStudent.isDorms} callback={getSelectedServiceType} />
         </Grid>
 
         <Grid item xs={10}>
-          <Container sx={{paddingTop: 5}}>
+          <Container sx={{ paddingTop: 5 }}>
             <Stack direction="row">
               <LocalizationProvider sx={{ minWidth: 200 }} dateAdapter={AdapterDayjs}>
                 <StaticDatePicker
@@ -56,25 +57,26 @@ export default function StudentHome() {
                     // prepare the dates:
                     let startDate = new Date(newValue.$y, newValue.$M, newValue.$D, 0, 0);
                     let endDate = new Date(newValue.$y, newValue.$M, newValue.$D + 1, 0, 0);
-                    
+
                     // format the dates properly:
                     let startDateFormatted = dayjs(startDate).format("YYYY-MM-DDTHH:mm");
                     let endDateFormatted = dayjs(endDate).format("YYYY-MM-DDTHH:mm");
 
                     // make the api call:
                     TimeSlotsApiService.getTimeSlots(
-                      selectedServiceType, 
-                      startDateFormatted, 
+                      selectedServiceType,
+                      startDateFormatted,
                       endDateFormatted,
                       LocalStorageManager.getAuthorizationTokenFromLocalStorage())
                       .then(response => {
                         if (response.status == 200) {
                           return response.json();
                         } else {
+                          setTimeSlotsData([]);
                           return Promise.reject();
                         }
                       })
-                      .then(json => console.log(json))
+                      .then(json => setTimeSlotsData(json))
                       .catch(err => {
                         console.error(err);
                       });
@@ -84,7 +86,19 @@ export default function StudentHome() {
               </LocalizationProvider>
               <Container>
                 <h2 className='text-center'>Time Slots</h2>
-                <Grid container columnSpacing={30} rowSpacing={2}>
+                <Grid container spacing={2}>
+                  {
+                    timeSlotsData.map((t, index) => (
+                      <Grid item xs={6}>
+                        <TimeSlot
+                          currentCapacity={t.currentCapacity}
+                          maxCapacity={t.maximumCapacity}
+                          startTime={dayjs(t.startTime).format('hh:mm A')}
+                          endTime={dayjs(t.endTime).format('hh:mm A')}
+                        />
+                      </Grid>
+                    ))
+                  }
                 </Grid>
               </Container>
             </Stack>
