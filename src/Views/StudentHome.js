@@ -14,6 +14,8 @@ import ServicesTabs from '../Components/ServicesTabs';
 import * as LocalStorageManager from '../Utils/LocalStorageManager.js';
 import * as TimeSlotsApiService from '../Services/TimeSlotsApiService.js';
 import dayjs from 'dayjs';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const darkTheme = createTheme({
   palette: {
@@ -24,12 +26,19 @@ const darkTheme = createTheme({
   },
 });
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function StudentHome() {
   const [selectedDate, setSelectedDate] = useState('');
   const [authenticatedStudent, setAuthenticatedStudent] = useState(LocalStorageManager.getAuthenticatedStudent());
   const [selectedServiceType, setSelectedServiceType] = useState(0);
   const [timeSlotsData, setTimeSlotsData] = useState([]);
+
+  // snackbars states:
+  const [sucessSnackbarOpen, setSucessSnackbarOpen] = useState(false);
+  const [warningSnackbarOpen, setWarningSnackbarOpen] = useState(false);
 
   const getSelectedServiceType = (serviceType) => {
     setSelectedServiceType(serviceType);
@@ -73,10 +82,14 @@ export default function StudentHome() {
                           return response.json();
                         } else {
                           setTimeSlotsData([]);
+                          setWarningSnackbarOpen(true);
                           return Promise.reject();
                         }
                       })
-                      .then(json => setTimeSlotsData(json))
+                      .then(json => {
+                        setTimeSlotsData(json)
+                        setSucessSnackbarOpen(true);
+                      })
                       .catch(err => {
                         console.error(err);
                       });
@@ -105,6 +118,21 @@ export default function StudentHome() {
           </Container>
         </Grid>
       </Grid>
-    </ThemeProvider >
+
+      {/* Snackbars */}
+
+      <Snackbar open={sucessSnackbarOpen} autoHideDuration={3000} onClose={() => setSucessSnackbarOpen(false)}>
+        <Alert onClose={() => setSucessSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
+          Found Time Slots for the selected date!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={warningSnackbarOpen} autoHideDuration={3000} onClose={() => setWarningSnackbarOpen(false)}>
+        <Alert onClose={() => setWarningSnackbarOpen(false)} severity="warning" sx={{ width: '100%' }}>
+          Oops! Could not find any time slots for this date. Try another date!
+        </Alert>
+      </Snackbar>
+
+    </ThemeProvider>
   );
 }
