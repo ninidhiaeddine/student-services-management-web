@@ -17,7 +17,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import './Mainpage.css'
+import './Styles.css'
 const theme = createTheme();
 
 const darkTheme = createTheme({

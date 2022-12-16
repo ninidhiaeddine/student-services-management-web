@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers-pro';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { useState } from 'react';
-import TimeSlot from '../Components/TimeSlot';
+import TimeSlot from '../Components/StudentTimeSlot';
 import Grid from '@mui/material/Grid';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';

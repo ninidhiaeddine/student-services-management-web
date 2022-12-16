@@ -30,12 +30,14 @@ const darkTheme = createTheme({
   },
 });
 
-export default function SignIn() {
+export default function SignIn(props) {
   const [email, _setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = React.useState(false);
-  const isStudent = useLocation().state.isStudent;
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const isStudent = location.state.isStudent;
 
   const setEmail = (email) => {
     let emailWithSuffix = '';

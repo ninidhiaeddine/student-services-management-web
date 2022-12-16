@@ -21,7 +21,7 @@ import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
 
-import './Mainpage.css'
+import './Styles.css'
 
 const darkTheme = createTheme({
   palette: {
