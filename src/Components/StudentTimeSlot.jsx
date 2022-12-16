@@ -8,12 +8,12 @@ import { useEffect, useState } from 'react';
 export default function TimeSlot(props) {
     const [isAvailable, setIsAvailable] = useState(true);
     useEffect(() => {
-        let condition = props.currentCapacity == props.maxCapacity;
-        setIsAvailable(condition);
+        let condition = props.currentCapacity === props.maxCapacity;
+        setIsAvailable(!condition);
     });
 
     return (
-        <Card sx={{ minWidth: 220, padding: 1}}>
+        <Card sx={{ minWidth: 280, padding: 1}}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Time Slot
@@ -25,7 +25,7 @@ export default function TimeSlot(props) {
                     Capacity: {props.currentCapacity} / {props.maxCapacity}
                 </Typography>
                 <Typography variant="body2">
-                    {isAvailable ? "Not Available" : "Available"}
+                    {isAvailable ? "Available" : "Not Available"}
                 </Typography>
             </CardContent>
             <CardActions>
