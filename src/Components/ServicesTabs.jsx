@@ -8,13 +8,20 @@ import Tab from '@mui/material/Tab';
 import { useState } from 'react';
 
 export default function ServicesTabs(props) {
-    const [value, setValue] = useState(0);
+    const [serviceType, _setServiceType] = useState(0);
+
+    const setServiceType = (serviceType) => {
+        _setServiceType(serviceType);
+        
+        // callback:
+        props.callback(serviceType);
+    }
 
     if (props.isDorms)
         return (
             <Tabs
-                value={value}
-                onChange={(e, newValue) => setValue(newValue)}
+                value={serviceType}
+                onChange={(e, newValue) => setServiceType(newValue)}
                 aria-label="icon position tabs example"
                 orientation="vertical"
             >
@@ -27,8 +34,8 @@ export default function ServicesTabs(props) {
     else
     return (
         <Tabs
-            value={value}
-            onChange={(e, newValue) => setValue(newValue)}
+            value={serviceType}
+            onChange={(e, newValue) => setServiceType(newValue)}
             aria-label="icon position tabs example"
             orientation="vertical"
         >
