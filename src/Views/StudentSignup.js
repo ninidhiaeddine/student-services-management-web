@@ -22,7 +22,6 @@ import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
 
 import './Mainpage.css'
-const theme = createTheme();
 
 const darkTheme = createTheme({
   palette: {
@@ -68,8 +67,6 @@ export default function StudentSignUp() {
   const handleOpen = () => {
     setOpen(true);
   };
-
-
 
   return (
     <ThemeProvider theme={darkTheme}>
