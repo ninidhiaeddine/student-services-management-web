@@ -4,7 +4,7 @@ export function addTimeSlots(timeSlotJsonList, token) {
     let url = process.env.REACT_APP_API_URL + endpoint;
     let response = fetch(url, {
         method: 'POST',
-        body: JSON.stringify(timeSlotJsonList),
+        body: timeSlotJsonList,
         headers: {
             "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export function updateTimeSlot(
 
     let response = fetch(url, {
         method: 'PUT',
-        body: JSON.stringify(timeSlotJson),
+        body: timeSlotJson,
         headers: {
             "Authorization": "Bearer " + token,
             'Content-Type': 'application/json'
