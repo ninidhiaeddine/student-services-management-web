@@ -18,8 +18,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { OutlinedInput } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-
-const theme = createTheme();
+import Divider from '@mui/material/Divider';
 
 const darkTheme = createTheme({
   palette: {
@@ -30,10 +29,65 @@ const darkTheme = createTheme({
   },
 });
 
-export default function SignIn(props) {
+export function signInStudentApi(signInJson, navigate) {
+  AuthApiService.signInStudent(signInJson)
+    .then(response => {
+      if (response.status == 200)
+        return response.text()
+      else
+        return Promise.reject();
+    })
+    .then(token => {
+      if (token)
+
+        LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
+
+      // get authenticated student info:
+      AuthApiService.getCurrentStudent(token)
+        .then(response => response.json())
+        .then(studentJson => {
+          // store authenticated student info:
+          LocalStorageManager.storeAuthenticatedStudentInLocalStorage(studentJson, signInJson.password);
+
+          // navigate to student home:
+          navigate("/StudentHome");
+        });
+    })
+    .catch(e => {
+      console.log(e);
+    });
+}
+
+export function signInAdminApi(signInJson, navigate) {
+  AuthApiService.signInAdmin(signInJson)
+    .then(response => response.text())
+    .then(token => {
+      if (token.status != 200)
+        return;
+
+      // store authorization token:
+      LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
+
+      // get authenticated admin info:
+      let admin = AuthApiService.getCurrentAdmin(token)
+        .then(response => response.json())
+        .then(adminJson => {
+          // store authenticated admin info:
+          LocalStorageManager.storeAuthenticatedAdminInLocalStorage(adminJson, signInJson.password);
+
+          // navigate to admin home:
+          navigate("/AdminHome");
+        });
+    })
+    .catch(e => {
+      console.log(e);
+    });
+}
+
+export default function SignIn() {
   const [email, _setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,8 +103,6 @@ export default function SignIn(props) {
     _setEmail(emailWithSuffix);
   }
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -65,55 +117,13 @@ export default function SignIn(props) {
     var jsonBody = JSON.stringify(data);
 
     if (isStudent) {
-      AuthApiService.signInStudent(jsonBody)
-        .then(response => {
-          if (response.status == 200)
-            return response.text()
-          else
-            return Promise.reject();
-        })
-        .then(token => {
-          if (token)
-
-            LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
-
-          // get authenticated student info:
-          let student = AuthApiService.getCurrentStudent(token);
-
-          // store authenticated student info:
-          LocalStorageManager.storeAuthenticatedStudentInLocalStorage(student, password);
-
-          // navigate to student home:
-          navigate("/StudentHome");
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      signInStudentApi(jsonBody, navigate);
     } else {
-      AuthApiService.signInAdmin(jsonBody)
-        .then(response => response.text())
-        .then(token => {
-          if (token.status != 200)
-            return;
-
-          // store authorization token:
-          LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
-
-          // get authenticated admin info:
-          let admin = AuthApiService.getCurrentAdmin(token);
-
-          // store authenticated student info:
-          LocalStorageManager.storeAuthenticatedAdminInLocalStorage(admin, password);
-
-          // navigate to student home:
-          navigate("/AdminHome");
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      signInAdminApi(jsonBody, navigate);
     }
   }
 
+  // Components:
   function Title(props) {
     if (props.isStudent === true)
       return <h2 className='sub-header'>Student Sign In</h2>;
@@ -161,7 +171,7 @@ export default function SignIn(props) {
             name="email"
             autoComplete="email"
             autoFocus
-            InputProps={ isStudent ? {
+            InputProps={isStudent ? {
               endAdornment: (
                 <InputAdornment position="end">
                   @mail.aub.edu
@@ -191,7 +201,7 @@ export default function SignIn(props) {
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
+                    onClick={() => setShowPassword(!showPassword)}
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
@@ -213,6 +223,10 @@ export default function SignIn(props) {
           >
             Sign In
           </Button>
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
           <Grid container>
             <Grid item>
               <StudentAdminSignUpLink isStudent={isStudent} />
