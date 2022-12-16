@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
@@ -16,9 +15,13 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useState } from 'react';
+import { signInAdminApi } from './SignIn.js';
+import * as RegistrationsApiService from '../Services/RegistrationsApiService.js';
 
 import './Styles.css'
-const theme = createTheme();
+import { signInAdmin } from '../Services/AuthApiService';
+import { useNavigate } from 'react-router-dom';
 
 const darkTheme = createTheme({
   palette: {
@@ -30,14 +33,23 @@ const darkTheme = createTheme({
 });
 
 export default function AdminSignUp() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, _setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const setEmail = (email) => {
+    let emailWithSuffix = email + "@aub.edu.lb";
+    _setEmail(emailWithSuffix);
+  }
+
   //password
   const [values, setValues] = React.useState({
     showPassword: false,
   });
 
-  const handleChangePassword = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
 
   const handleClickShowPassword = () => {
     setValues({
@@ -50,7 +62,35 @@ export default function AdminSignUp() {
     event.preventDefault();
   };
 
+  function handleSignUp(event) {
+    event.preventDefault();
+    
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    };
+    var jsonBody = JSON.stringify(data);
 
+    RegistrationsApiService.signUpAdmin(jsonBody)
+        .then(response => {
+          if (response.status == 200) {
+            let signInData = {
+              email: email,
+              password: password,
+            }
+            
+            let jsonBody = JSON.stringify(signInData);
+            signInAdminApi(jsonBody, navigate);
+          }
+          else
+            return Promise.reject();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -63,6 +103,7 @@ export default function AdminSignUp() {
             flexDirection: 'column',
             alignItems: 'center',
           }}
+          onSubmit={handleSignUp}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -81,6 +122,7 @@ export default function AdminSignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={e => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -91,6 +133,7 @@ export default function AdminSignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={e => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,6 +144,7 @@ export default function AdminSignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -117,7 +161,7 @@ export default function AdminSignUp() {
                     id="password"
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
-                    onChange={handleChangePassword('password')}
+                    onChange={e => setPassword(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
