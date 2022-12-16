@@ -12,8 +12,24 @@ export default function TimeSlot(props) {
         setIsAvailable(!condition);
     });
 
+    function AvailableTypography(props) {
+        if (props.isAvailable)
+            return (<Typography variant="body2" sx={{
+                color: '#26D1B3'
+            }}>
+                Available
+            </Typography>);
+
+        else
+            return (<Typography variant="body2" sx={{
+                color: 'red'
+            }}>
+                Not Available
+            </Typography>)
+    }
+
     return (
-        <Card sx={{ minWidth: 280, padding: 1}}>
+        <Card sx={{ minWidth: 280, padding: 1 }}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Time Slot
@@ -24,9 +40,8 @@ export default function TimeSlot(props) {
                 <Typography variant="body2">
                     Capacity: {props.currentCapacity} / {props.maxCapacity}
                 </Typography>
-                <Typography variant="body2">
-                    {isAvailable ? "Available" : "Not Available"}
-                </Typography>
+                <AvailableTypography isAvailable={isAvailable} />
+
             </CardContent>
             <CardActions>
                 <Button disabled={!isAvailable} variant="contained">
