@@ -44,18 +44,17 @@ export function getTimeSlotsByServiceType(serviceType, token) {
 export function getTimeSlots(
     serviceType,
     startDateInclusive,
-    endDateExclusive) {
-    //formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-    startDate = startDateInclusive.toDateString();
-    endDate = endDateExclusive.toDateString();
+    endDateExclusive,
+    token) {
+    // NOTE: expected date format is "yyyy-MM-ddTHH:mm"
 
     let url = process.env.REACT_APP_API_URL + endpoint
         + "?serviceType="
         + serviceType
         + "&startDateInclusive="
-        + startDate
+        + startDateInclusive
         + "&endDateExclusive="
-        + endDate;
+        + endDateExclusive;
 
     let response = fetch(url, {
         method: 'GET',
