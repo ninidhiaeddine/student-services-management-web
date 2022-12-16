@@ -38,9 +38,7 @@ export function signInStudentApi(signInJson, navigate) {
         return Promise.reject();
     })
     .then(token => {
-      if (token)
-
-        LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
+      LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
 
       // get authenticated student info:
       AuthApiService.getCurrentStudent(token)
@@ -60,19 +58,20 @@ export function signInStudentApi(signInJson, navigate) {
 
 export function signInAdminApi(signInJson, navigate) {
   AuthApiService.signInAdmin(signInJson)
-    .then(response => response.text())
+    .then(response => {
+      if (response.status == 200)
+        return response.text()
+      else
+        return Promise.reject();
+    })
     .then(token => {
-      if (token.status != 200)
-        return;
-
-      // store authorization token:
       LocalStorageManager.storeAuthorizationTokenInLocalStorage(token);
 
       // get authenticated admin info:
-      let admin = AuthApiService.getCurrentAdmin(token)
+      AuthApiService.getCurrentAdmin(token)
         .then(response => response.json())
         .then(adminJson => {
-          // store authenticated admin info:
+          // store admin info:
           LocalStorageManager.storeAuthenticatedAdminInLocalStorage(adminJson, signInJson.password);
 
           // navigate to admin home:
