@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 // icons:
 import SchoolIcon from '@mui/icons-material/School';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import Divider from '@mui/material/Divider';
 
 const darkTheme = createTheme({
   palette: {
