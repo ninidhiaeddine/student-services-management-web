@@ -12,6 +12,8 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import ServicesTabs from '../Components/ServicesTabs';
 import * as LocalStorageManager from '../Utils/LocalStorageManager.js';
+import * as TimeSlotsApiService from '../Services/TimeSlotsApiService.js';
+import dayjs from 'dayjs';
 
 const darkTheme = createTheme({
   palette: {
@@ -24,15 +26,20 @@ const darkTheme = createTheme({
 
 
 export default function StudentHome() {
-  const [value, setValue] = useState([null, null]);
+  const [selectedDate, setSelectedDate] = useState('');
   const [authenticatedStudent, setAuthenticatedStudent] = useState(LocalStorageManager.getAuthenticatedStudent());
+  const [selectedServiceType, setSelectedServiceType] = useState(0);
+
+  const getSelectedServiceType = (serviceType) => {
+    setSelectedServiceType(serviceType);
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Grid container>
         <Grid item xs={2}>
-          <ServicesTabs isDorms={authenticatedStudent.isDorms}/>
+          <ServicesTabs isDorms={authenticatedStudent.isDorms} callback={getSelectedServiceType}/>
         </Grid>
 
         <Grid item xs={10}>
@@ -42,12 +49,35 @@ export default function StudentHome() {
                 <StaticDatePicker
                   displayStaticWrapperAs="desktop"
                   openTo="day"
-                  value={value}
+                  value={selectedDate}
                   onChange={(newValue) => {
-                    setValue(newValue);
-                    console.log(newValue.$D);
-                    console.log(newValue.$M + 1);
-                    console.log(newValue.$y);
+                    setSelectedDate(newValue);
+
+                    // prepare the dates:
+                    let startDate = new Date(newValue.$y, newValue.$M, newValue.$D, 0, 0);
+                    let endDate = new Date(newValue.$y, newValue.$M, newValue.$D + 1, 0, 0);
+                    
+                    // format the dates properly:
+                    let startDateFormatted = dayjs(startDate).format("YYYY-MM-DDTHH:mm");
+                    let endDateFormatted = dayjs(endDate).format("YYYY-MM-DDTHH:mm");
+
+                    // make the api call:
+                    TimeSlotsApiService.getTimeSlots(
+                      selectedServiceType, 
+                      startDateFormatted, 
+                      endDateFormatted,
+                      LocalStorageManager.getAuthorizationTokenFromLocalStorage())
+                      .then(response => {
+                        if (response.status == 200) {
+                          return response.json();
+                        } else {
+                          return Promise.reject();
+                        }
+                      })
+                      .then(json => console.log(json))
+                      .catch(err => {
+                        console.error(err);
+                      });
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
