@@ -1,24 +1,28 @@
-.container{
+.container {
     height: 50px;
     border-left: 1px solid #0000;
- }
+}
+
 Select {
   width: 100%;
 }
-.ServiceTypeBtn{
+
+.ServiceTypeBtn {
     border: solid 2px white;
     width: 70%;
     height: fit-content;
 }
-.ServiceIcon{
+
+.ServiceIcon {
     width: 30%;
     color: white;
 }
-.color-nav{
+
+.color-nav {
     background-color: #26D1B3;
 }
 
-.SideNav{
+.SideNav {
     min-height:100%;
     min-width: 25%;
     background-color: #26D1B3;
@@ -26,7 +30,8 @@ Select {
     border-bottom-right-radius: 25px ;
     display: inline-block;
 }
-.BtnGroup{
+
+.BtnGroup {
     margin-right: auto;
     margin-left: auto;
     color: white;

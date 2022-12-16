@@ -20,9 +20,12 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
+import { useState } from 'react';
+import * as RegistrationsApiService from '../Services/RegistrationsApiService.js';
+import { signInStudentApi } from './SignIn.js';
 
-import './Mainpage.css'
-const theme = createTheme();
+import './Styles.css'
+import { useNavigate } from 'react-router-dom';
 
 const darkTheme = createTheme({
   palette: {
@@ -34,14 +37,33 @@ const darkTheme = createTheme({
 });
 
 export default function StudentSignUp() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, _setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [studentId, setStudentId] = useState(0);
+  const [gender, setGender] = useState(0);
+  const [isDorms, _setIsDorms] = useState(0);
+
+  const navigate = useNavigate();
+
+  const setEmail = (email) => {
+    let emailWithSuffix = email + "@mail.aub.edu";
+    _setEmail(emailWithSuffix);
+  }
+
+  const setIsDorms = (isDorms) => {
+    // converts isDorms value to integer:
+    _setIsDorms(+ isDorms);
+  }
+
+  //Dropdown 
+  const [open, setOpen] = React.useState(false);
+
   //password
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     showPassword: false,
   });
-
-  const handleChangePassword = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
 
   const handleClickShowPassword = () => {
     setValues({
@@ -54,22 +76,39 @@ export default function StudentSignUp() {
     event.preventDefault();
   };
 
-  //Dropdown 
-  const [Gender, setGender] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  function handleSignUp(event) {
+    event.preventDefault();
 
-  const handleChangeGender = (event) => {
-    setGender(event.target.value);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      studentId: studentId,
+      gender: gender,
+      isDorms: isDorms
+    };
+    let jsonBody = JSON.stringify(data);
+    console.log(jsonBody);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+    RegistrationsApiService.signUpStudent(jsonBody)
+        .then(response => {
+          if (response.status == 200) {
+            let signInData = {
+              email: email,
+              password: password,
+            }
 
-
+            let jsonBody = JSON.stringify(signInData);
+            signInStudentApi(jsonBody, navigate);
+          }
+          else
+            return Promise.reject();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -82,6 +121,7 @@ export default function StudentSignUp() {
             flexDirection: 'column',
             alignItems: 'center',
           }}
+          onSubmit={handleSignUp}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -100,6 +140,7 @@ export default function StudentSignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={e => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -110,6 +151,7 @@ export default function StudentSignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={e => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -120,6 +162,7 @@ export default function StudentSignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -136,7 +179,10 @@ export default function StudentSignUp() {
                   fullWidth
                   id="IdNumbers"
                   label="ID Number"
+                  type="number"
+                  min="0"
                   autoFocus
+                  onChange={e => setStudentId(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6} >
@@ -146,17 +192,17 @@ export default function StudentSignUp() {
                     labelId="GenderDropDownLabel"
                     id="GenderDropDown"
                     open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={Gender}
+                    onClose={() => setOpen(false)}
+                    onOpen={() => setOpen(true)}
+                    value={gender}
                     label="Gender"
-                    onChange={handleChangeGender}
+                    onChange={(event) => {setGender(event.target.value)}}
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1}>Male</MenuItem>
-                    <MenuItem value={2}>Female</MenuItem>
+                    <MenuItem value={0}>Male</MenuItem>
+                    <MenuItem value={1}>Female</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -168,7 +214,7 @@ export default function StudentSignUp() {
                     id="password"
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
-                    onChange={handleChangePassword('password')}
+                    onChange={e => setPassword(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -211,7 +257,7 @@ export default function StudentSignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormGroup>
-                  <FormControlLabel control={<Switch defaultChecked />} label="I am a dorms student" />
+                  <FormControlLabel control={<Switch onChange={e => setIsDorms(e.target.checked)}/>} label="I am a dorms student" />
                 </FormGroup>
               </Grid>
             </Grid>

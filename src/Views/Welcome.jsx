@@ -6,11 +6,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import logo from './Images/Logo.png';
 import './Styles.css'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { useNavigate } from 'react-router-dom';
-
-// icons:
-import SchoolIcon from '@mui/icons-material/School';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const darkTheme = createTheme({
   palette: {
@@ -24,7 +21,7 @@ const darkTheme = createTheme({
   },
 });
 
-export default function Home() {
+export default function Welcome() {
   let navigate = useNavigate();
 
   return (
@@ -39,31 +36,12 @@ export default function Home() {
         }}>
           <img src={logo} alt="Image of app logo" width="70%" ></img>
           <h1 className='glow-title text-center'>Student Services Management</h1>
-          <p className='text-center'>I am a</p>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              width: 1 / 2
-            }}
-            endIcon={<SchoolIcon />}
-            onClick={() => navigate('/SignIn', { state: {isStudent: true}})}
-          >
-            Student
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              width: 1 / 2
-            }}
-            endIcon={<AdminPanelSettingsIcon />}
-            onClick={() => navigate('/SignIn', { state: {isStudent: false}})}
-          >
-            Admin
-          </Button>
+          <p className='text-center'>Get ready to make your life easier with a single click!</p>
+          <Button variant="contained" sx={{
+            width: 1 / 2
+          }} endIcon={<ArrowRightAltIcon />}
+            onClick={() => navigate('/')}>
+            Get Started</Button>
         </Stack>
       </Container>
 

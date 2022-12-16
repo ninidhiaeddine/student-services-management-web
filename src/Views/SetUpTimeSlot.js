@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers-pro';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DesktopDateRangePicker } from '@mui/x-date-pickers-pro/DesktopDateRangePicker';
 
-import './Mainpage.css'
+import './Styles.css'
 const theme = createTheme();
 
 const darkTheme = createTheme({

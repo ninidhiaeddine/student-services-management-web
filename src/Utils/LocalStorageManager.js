@@ -47,3 +47,7 @@ export function getAuthenticatedStudent() {
         isDorms: localStorage.getItem("IS_DORMS_KEY")
     }
 }
+
+export function clearStorage() {
+    localStorage.clear();
+}
