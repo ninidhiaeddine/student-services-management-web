@@ -40,3 +40,8 @@ Select {
 .sub-header {
     color: #26D1B3;
 }
+.AdminBtn{
+    border: solid #26D1B3 3px ;
+    border-radius: 20%;
+    
+}
